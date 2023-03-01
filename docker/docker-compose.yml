@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  nginx:
+    image: nginx:1.20
+    ports:
+      - 8000:8000
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ../:/var/www/html
+    links:
+      - php
+  php:
+    build: ./php
+    volumes:
+      - ./php/config.ini:/usr/local/etc/php/conf.d/config.ini
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./php/fpm.ini:/usr/local/etc/php-fpm.d/docker2.conf
+      - ../:/var/www/html
